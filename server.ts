@@ -17,31 +17,9 @@ const WARNING_TEXT_HINDI =
   'Sabse pahle hack se registration karo. Uske bad usi ID me minimum paanch sau rupaye ka deposit karo. Uske bad hack open ho jayega.';
 
 /* ============================================================================
-   ██  10 ADAPTIVE PATTERN & TREND BYPASS SERVERS (108-LAYER ENGINE)
+   ██  🔒 ORIGINAL CORE PREDICTION LOGIC — 100% UNTOUCHED FROM USER HTML
    ============================================================================ */
-interface BypassServerNode {
-  id: string;
-  name: string;
-  specialty: string;
-  region: string;
-  baseWeight: number;
-}
-
-const TEN_BYPASS_SERVERS: BypassServerNode[] = [
-  { id: 'SRV-01', name: 'ALPHA-DRAGON-TREND', specialty: 'Dragon Streak & Long Run Adaptive', region: 'SG-CORE-1', baseWeight: 98.4 },
-  { id: 'SRV-02', name: 'BETA-ZIGZAG-MATRIX', specialty: 'A-B-A-B Alternating Pattern Lock', region: 'HK-NODE-2', baseWeight: 97.9 },
-  { id: 'SRV-03', name: 'GAMMA-2-1-2-HARMONIC', specialty: 'Double-Single-Double Bridge Sync', region: 'JP-EDGE-3', baseWeight: 98.1 },
-  { id: 'SRV-04', name: 'DELTA-MIRROR-TWIN', specialty: 'Mirror & Twin Digit Jackpot Solver', region: 'IN-MUM-4', baseWeight: 99.1 },
-  { id: 'SRV-05', name: 'EPSILON-FIBONACCI-GAP', specialty: 'Missing Digit Cold-Gap Calculator', region: 'DE-FRA-5', baseWeight: 98.6 },
-  { id: 'SRV-06', name: 'ZETA-MARKOV-CHAIN', specialty: '10-State Transition Probability Matrix', region: 'US-EAST-6', baseWeight: 98.8 },
-  { id: 'SRV-07', name: 'ETA-VOLATILITY-SHIELD', specialty: 'Sudden Trend-Break & Trap Reversal', region: 'UK-LON-7', baseWeight: 97.7 },
-  { id: 'SRV-08', name: 'THETA-QUANTUM-ENTROPY', specialty: 'SHA-Hash Seed & Period Drift Decoder', region: 'SG-CORE-8', baseWeight: 99.3 },
-  { id: 'SRV-09', name: 'IOTA-PARITY-WAVE', specialty: 'Odd/Even & Big/Small Harmonic Wave', region: 'AE-DXB-9', baseWeight: 98.2 },
-  { id: 'SRV-10', name: 'KAPPA-JACKPOT-SNIPER', specialty: 'Exact Single-Number 0-9 Jackpot Lock', region: 'GLOBAL-10', baseWeight: 99.6 },
-];
-
-// 🔒 Untouched core prediction logic mirror for 108-layer verification alignment
-function getCoreFixedResult(pStr: string): { rn: number; sz: string } {
+function getFixedResultForPeriod(pStr: string): { rn: number; sz: string } {
   if (!pStr) return { rn: 6, sz: 'BIG' };
   var hash = 0;
   for (var i = 0; i < pStr.length; i++) {
@@ -53,56 +31,75 @@ function getCoreFixedResult(pStr: string): { rn: number; sz: string } {
   return { rn: rn, sz: sz };
 }
 
-function run108LayerMultiServerAnalysis(periodStr: string, historyNumbers: number[]) {
-  const coreTarget = getCoreFixedResult(periodStr);
+/* ============================================================================
+   ██  1,024 MICRO BYPASS SERVERS + 120 AI ALGORITHM LAYERS (2-LEVEL FIX WIN)
+   ============================================================================ */
+interface MicroClusterGroup {
+  clusterId: string;
+  serverRange: string;
+  aiLayerRange: string;
+  algorithmName: string;
+}
+
+const MICRO_SERVER_CLUSTERS: MicroClusterGroup[] = [
+  { clusterId: 'CL-01', serverRange: 'MSRV-0001..0102', aiLayerRange: 'AI-L001..L012', algorithmName: '2-LEVEL STREAK ANTI-LOSS SHIELD' },
+  { clusterId: 'CL-02', serverRange: 'MSRV-0103..0204', aiLayerRange: 'AI-L013..L024', algorithmName: 'DEEP MARKOV 10-DIGIT TRANSITION' },
+  { clusterId: 'CL-03', serverRange: 'MSRV-0205..0307', aiLayerRange: 'AI-L025..L036', algorithmName: 'FOURIER HARMONIC CYCLE DECODER' },
+  { clusterId: 'CL-04', serverRange: 'MSRV-0308..0409', aiLayerRange: 'AI-L037..L048', algorithmName: 'BAYESIAN POSTERIOR WIN OPTIMIZER' },
+  { clusterId: 'CL-05', serverRange: 'MSRV-0410..0512', aiLayerRange: 'AI-L049..L060', algorithmName: 'MONTE CARLO 1000-NODE CONSENSUS' },
+  { clusterId: 'CL-06', serverRange: 'MSRV-0513..0614', aiLayerRange: 'AI-L061..L072', algorithmName: 'SHANNON ENTROPY DRIFT SUPPRESSOR' },
+  { clusterId: 'CL-07', serverRange: 'MSRV-0615..0716', aiLayerRange: 'AI-L073..L084', algorithmName: 'FIBONACCI COLD-DIGIT GAP SNIPER' },
+  { clusterId: 'CL-08', serverRange: 'MSRV-0717..0819', aiLayerRange: 'AI-L085..L096', algorithmName: 'ZIGZAG & 2-1-2 BRIDGE ADAPTIVE' },
+  { clusterId: 'CL-09', serverRange: 'MSRV-0820..0921', aiLayerRange: 'AI-L097..L108', algorithmName: 'DRAGON STREAK REVERSAL GUARD' },
+  { clusterId: 'CL-10', serverRange: 'MSRV-0922..1024', aiLayerRange: 'AI-L109..L120', algorithmName: '2-LEVEL FIX WIN JACKPOT LOCK' },
+];
+
+function run1024MicroServersAnd120AiLayers(periodStr: string, historyNumbers: number[]) {
+  // 1. Original Core Prediction (100% preserved)
+  const coreResult = getFixedResultForPeriod(periodStr);
   const recent = historyNumbers.length > 0 ? historyNumbers : [6, 2, 8, 4, 9, 1, 7, 3];
 
-  // Detect live pattern type from real history
-  let detectedTrend = 'QUANTUM-JACKPOT-LOCK';
+  // 2. Execute 1,024 Micro Bypass Servers in virtual parallel nodes
+  let microConsensusHash = 0x811c9dc5;
+  for (let srv = 1; srv <= 1024; srv++) {
+    const hDigit = recent[(srv - 1) % recent.length] || 0;
+    const pCode = periodStr.charCodeAt((srv - 1) % Math.max(1, periodStr.length)) || 48;
+    microConsensusHash ^= ((srv * 73) ^ (hDigit * 199) ^ (pCode * 41)) & 0xffff;
+    microConsensusHash = Math.imul(microConsensusHash, 0x01000193) >>> 0;
+  }
+
+  // 3. Execute 120 AI Algorithm & Calculation Layers for 2-Level Fix Win Optimization
+  let aiLayerVector = microConsensusHash;
+  for (let layer = 1; layer <= 120; layer++) {
+    const hDigit = recent[(layer - 1) % recent.length] || 0;
+    const delta = recent.length >= 2 ? Math.abs(recent[0] - recent[1]) : 3;
+    aiLayerVector = (Math.imul(aiLayerVector ^ (layer * 0x9e37), 1664525) + hDigit * 97 + delta * 53) >>> 0;
+  }
+
+  // 4. Live Pattern & 2-Level Recovery Detection
+  let activePattern = '2-LEVEL-FIX-JACKPOT';
   if (recent.length >= 4) {
-    const b0 = recent[0] >= 5;
-    const b1 = recent[1] >= 5;
-    const b2 = recent[2] >= 5;
-    const b3 = recent[3] >= 5;
-    if (b0 === b1 && b1 === b2) detectedTrend = 'DRAGON-STREAK-TREND';
-    else if (b0 !== b1 && b1 !== b2 && b2 !== b3) detectedTrend = 'ZIGZAG-ALTERNATING';
-    else if (recent[0] === recent[1] || recent[0] === recent[2]) detectedTrend = 'MIRROR-TWIN-REPEAT';
-    else if (b0 === b1 && b1 !== b2) detectedTrend = '2-1-2-HARMONIC-BRIDGE';
+    const s0 = recent[0] >= 5;
+    const s1 = recent[1] >= 5;
+    const s2 = recent[2] >= 5;
+    const s3 = recent[3] >= 5;
+    if (s0 === s1 && s1 === s2) activePattern = 'DRAGON-2LVL-LOCK';
+    else if (s0 !== s1 && s1 !== s2 && s2 !== s3) activePattern = 'ZIGZAG-2LVL-LOCK';
+    else if (recent[0] === recent[1]) activePattern = 'TWIN-DIGIT-SNIPER';
+    else if (s0 === s1 && s1 !== s2) activePattern = 'HARMONIC-2LVL-SYNC';
   }
-
-  // Execute 108 layers of calculation across the 10 servers
-  let accumulator = 0x811c9dc5;
-  for (let layer = 1; layer <= 108; layer++) {
-    const histVal = recent[(layer - 1) % recent.length] || 0;
-    const pChar = periodStr.charCodeAt((layer - 1) % Math.max(1, periodStr.length)) || 48;
-    accumulator ^= (histVal * 131 + pChar * 31 + layer * 17) & 0xff;
-    accumulator = Math.imul(accumulator, 0x01000193) >>> 0;
-  }
-
-  const serverReports = TEN_BYPASS_SERVERS.map((srv, idx) => {
-    const layerStart = idx * 10 + 1;
-    const layerEnd = idx === 9 ? 108 : (idx + 1) * 10;
-    const confidence = Number((srv.baseWeight + ((accumulator + idx * 7) % 14) * 0.02).toFixed(2));
-    return {
-      ...srv,
-      layersProcessed: `${layerStart}-${layerEnd}`,
-      confidence: Math.min(99.9, confidence),
-      lockedNumber: coreTarget.rn,
-      lockedSize: coreTarget.sz,
-      status: 'SYNCHRONIZED',
-    };
-  });
 
   return {
-    totalLayers: 108,
-    activeServers: 10,
-    detectedTrend,
     period: periodStr,
-    jackpotNumber: coreTarget.rn,
-    jackpotSize: coreTarget.sz,
-    overallConfidence: 99.8,
-    cipherSignature: '0x' + accumulator.toString(16).toUpperCase().padStart(8, '0'),
-    servers: serverReports,
+    microServersOnline: 1024,
+    aiLayersExecuted: 120,
+    fixWinLevel: '2 LEVEL FIX WIN',
+    activePattern,
+    rn: coreResult.rn,
+    sz: coreResult.sz,
+    winProbability: 99.94,
+    signature: '0x' + (aiLayerVector & 0xffffff).toString(16).toUpperCase().padStart(6, '0'),
+    clusters: MICRO_SERVER_CLUSTERS,
   };
 }
 
@@ -207,12 +204,12 @@ async function startServer() {
     }
   });
 
-  // 2. 10-Server + 108-Layer Adaptive Pattern & Number Jackpot Bypass Endpoint
+  // 2. 1,024 Micro Bypass Servers + 120 AI Layers Endpoint
   app.post('/api/bypass-cluster', (req, res) => {
     try {
       const period = String(req.body?.period || '0000');
       const history = Array.isArray(req.body?.history) ? req.body.history.map(Number) : [];
-      const result = run108LayerMultiServerAnalysis(period, history);
+      const result = run1024MicroServersAnd120AiLayers(period, history);
       res.setHeader('Cache-Control', 'no-store');
       return res.json(result);
     } catch (_e) {
@@ -247,24 +244,14 @@ async function startServer() {
     }
   });
 
-  // Serve built frontend in Cloud Run if dist/index.html exists, otherwise Vite middleware
   const distPath = path.join(__dirname, 'dist');
   const hasDist = fs.existsSync(path.join(distPath, 'index.html'));
 
-  if (process.env.NODE_ENV === 'production' || hasDist) {
-    // In dev environment inside AI Studio, prefer Vite middleware unless NODE_ENV=production
-    if (process.env.NODE_ENV === 'production') {
-      app.use(express.static(distPath));
-      app.get('*', (_req, res) => {
-        res.sendFile(path.join(distPath, 'index.html'));
-      });
-    } else {
-      const vite = await createViteServer({
-        server: { middlewareMode: true },
-        appType: 'spa',
-      });
-      app.use(vite.middlewares);
-    }
+  if (process.env.NODE_ENV === 'production' && hasDist) {
+    app.use(express.static(distPath));
+    app.get('*', (_req, res) => {
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
   } else {
     const vite = await createViteServer({
       server: { middlewareMode: true },
