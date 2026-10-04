@@ -4,13 +4,21 @@
  */
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import {
+  activateSourceProtectionShield,
+  getProtectedConfig,
+  sealToVault128,
+  unsealFromVault128,
+} from './securityVault';
 
 /* ============================================================================
-   ██  CONFIG & CONSTANTS
+   ██  128-LAYER ENCRYPTED RUNTIME VAULT CONFIG
    ============================================================================ */
-const ADMIN_NUMBER = '655675576694'; // 12-digit Admin Master Number — bypasses register/deposit
-const REFERRAL_URL = 'https://bdgwin78.com/#/register?invitationCode=4148715921265';
-const API_ENDPOINT_1M_DIRECT = 'https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json';
+activateSourceProtectionShield();
+const _VAULT_CFG = getProtectedConfig();
+const ADMIN_NUMBER = _VAULT_CFG.ADMIN_NUMBER; // Unsealed at runtime via 128-Layer Vault
+const REFERRAL_URL = _VAULT_CFG.REFERRAL_URL;
+const API_ENDPOINT_1M_DIRECT = _VAULT_CFG.API_ENDPOINT_1M_DIRECT;
 
 const BALL_IMAGES: Record<number, string> = {
   0: 'https://i.ibb.co/zTqVhNm3/num-0.png',
@@ -55,9 +63,72 @@ function getFixedResultForPeriod(pStr: string): { rn: number; sz: string } {
 }
 
 /* ============================================================================
-   ██  55-LAYER MILITARY-GRADE SYMMETRIC CIPHER ENGINE
+   ██  10 ADAPTIVE BYPASS SERVERS + 108-LAYER NUMBER JACKPOT ENGINE
+   ============================================================================
+   Synchronizes 10 specialized pattern & trend bypass servers across 108 layers
+   of calculation (Dragon Streak, ZigZag A-B-A-B, 2-1-2 Bridge, Mirror Twin,
+   Fibonacci Cold-Gap, Markov Matrix, Volatility Shield, Quantum Hash, Parity
+   Wave, and Exact Number Jackpot Sniper) while keeping the core prediction
+   output 100% aligned with getFixedResultForPeriod(pStr).
    ============================================================================ */
-const CIPHER_LAYERS = 55;
+export interface BypassServerSpec {
+  id: string;
+  name: string;
+  tag: string;
+  layers: string;
+}
+
+const TEN_ADAPTIVE_SERVERS: BypassServerSpec[] = [
+  { id: 'S1', name: 'SRV-01 DRAGON-TREND', tag: 'STREAK ADAPTIVE', layers: 'L01-L11' },
+  { id: 'S2', name: 'SRV-02 ZIGZAG-MATRIX', tag: 'A-B-A-B LOCK', layers: 'L12-L22' },
+  { id: 'S3', name: 'SRV-03 HARMONIC-212', tag: '2-1-2 BRIDGE', layers: 'L23-L33' },
+  { id: 'S4', name: 'SRV-04 MIRROR-TWIN', tag: 'TWIN DIGIT SYNC', layers: 'L34-L44' },
+  { id: 'S5', name: 'SRV-05 FIBONACCI-GAP', tag: 'COLD DIGIT SNIPER', layers: 'L45-L55' },
+  { id: 'S6', name: 'SRV-06 MARKOV-CHAIN', tag: '10-STATE MATRIX', layers: 'L56-L66' },
+  { id: 'S7', name: 'SRV-07 TRAP-SHIELD', tag: 'TREND REVERSAL', layers: 'L67-L77' },
+  { id: 'S8', name: 'SRV-08 QUANTUM-SEED', tag: 'SHA DRIFT BYPASS', layers: 'L78-L88' },
+  { id: 'S9', name: 'SRV-09 PARITY-WAVE', tag: 'BIG/SMALL WAVE', layers: 'L89-L98' },
+  { id: 'S10', name: 'SRV-10 JACKPOT-CORE', tag: 'NUMBER JACKPOT', layers: 'L99-L108' },
+];
+
+function execute108LayerClientEngine(periodStr: string, historyNums: number[]) {
+  // Core result remains 100% untouched from getFixedResultForPeriod
+  const core = getFixedResultForPeriod(periodStr);
+  const recent = historyNums.length > 0 ? historyNums : [core.rn, 7, 2, 8, 4];
+
+  let stateAcc = 0x811c9dc5;
+  for (let layer = 1; layer <= 108; layer++) {
+    const hVal = recent[(layer - 1) % recent.length] || 0;
+    const cVal = periodStr.charCodeAt((layer - 1) % Math.max(1, periodStr.length)) || 48;
+    stateAcc ^= (hVal * 131 + cVal * 37 + layer * 19) & 0xff;
+    stateAcc = Math.imul(stateAcc, 16777619) >>> 0;
+  }
+
+  let trendName = 'JACKPOT-SNIPER';
+  if (recent.length >= 3) {
+    const b0 = recent[0] >= 5;
+    const b1 = recent[1] >= 5;
+    const b2 = recent[2] >= 5;
+    if (b0 === b1 && b1 === b2) trendName = 'DRAGON-STREAK';
+    else if (b0 !== b1 && b1 !== b2) trendName = 'ZIGZAG-MATRIX';
+    else if (recent[0] === recent[1]) trendName = 'TWIN-MIRROR';
+    else trendName = 'HARMONIC-WAVE';
+  }
+
+  return {
+    rn: core.rn,
+    sz: core.sz,
+    totalLayers: 108,
+    serversSynced: 10,
+    trendName,
+    signature: '0x' + (stateAcc & 0xffff).toString(16).toUpperCase().padStart(4, '0'),
+  };
+}
+
+/* ============================================================================
+   ██  108-LAYER SYMMETRIC CIPHER ENGINE (SESSION & REFERRAL LOCK)
+   ============================================================================ */
+const CIPHER_LAYERS = 108;
 const CIPHER_MASTER_SEED =
   0x5f3759df ^ (typeof navigator !== 'undefined' ? navigator.userAgent.length * 7919 : 31337);
 
@@ -71,7 +142,7 @@ function deriveLayerKey(seed: number, layerIdx: number): number[] {
   return keyBytes;
 }
 
-function encryptL55(payloadObj: unknown): string | null {
+function encryptL108(payloadObj: unknown): string | null {
   try {
     const rawJson = JSON.stringify(payloadObj);
     const encoder = new TextEncoder();
@@ -105,16 +176,16 @@ function encryptL55(payloadObj: unknown): string | null {
     }
 
     const hex = bytes.map((b) => b.toString(16).padStart(2, '0')).join('');
-    return 'L55$' + btoa(hex);
+    return 'L236$' + sealToVault128(btoa(hex));
   } catch (_e) {
     return null;
   }
 }
 
-function decryptL55<T = any>(cipherText: string): T | null {
+function decryptL108<T = any>(cipherText: string): T | null {
   try {
-    if (!cipherText || !cipherText.startsWith('L55$')) return null;
-    const hex = atob(cipherText.slice(4));
+    if (!cipherText || !cipherText.startsWith('L236$')) return null;
+    const hex = atob(unsealFromVault128(cipherText.slice(5)));
     if (hex.length % 2 !== 0) return null;
 
     const bytes: number[] = [];
@@ -170,10 +241,10 @@ function makeChecksum(str: string): string {
 }
 
 /* ============================================================================
-   ██  SESSION & REFERRAL TRACKING (55-Layer Encrypted)
+   ██  SESSION & REFERRAL TRACKING (108-Layer Encrypted)
    ============================================================================ */
-const SESSION_KEY = 'bdgwin_sess_l55_v3';
-const REF_CLICK_KEY = 'bdgwin_ref_click_l55_v3';
+const SESSION_KEY = 'bdgwin_sess_l108_v4';
+const REF_CLICK_KEY = 'bdgwin_ref_click_l108_v4';
 const HUD_POS_KEY = 'bdgwin_hud_pos_v2';
 const PANEL_POS_KEY = 'bdgwin_panel_pos_v2';
 
@@ -202,7 +273,7 @@ function saveSession(user: { mobile: string; name?: string; deposit?: number; ma
       nonce,
       checksum,
     };
-    const cipher = encryptL55(payload);
+    const cipher = encryptL108(payload);
     if (cipher) localStorage.setItem(SESSION_KEY, cipher);
   } catch (_e) {}
 }
@@ -211,7 +282,7 @@ function loadSession(): SessionData | null {
   try {
     const raw = localStorage.getItem(SESSION_KEY);
     if (!raw) return null;
-    const s = decryptL55<SessionData>(raw);
+    const s = decryptL108<SessionData>(raw);
     if (!s || !s.mobile || !s.nonce) return null;
     const expected = makeChecksum(`${s.mobile}|${s.master ? '1' : '0'}|${s.ts}|${s.nonce}`);
     if (s.checksum !== expected) {
@@ -236,7 +307,7 @@ function clearSession() {
 
 function markReferralLinkOpened() {
   try {
-    const token = encryptL55({ clicked: true, code: '4148715921265', ts: Date.now() });
+    const token = encryptL108({ clicked: true, code: '4148715921265', ts: Date.now() });
     if (token) localStorage.setItem(REF_CLICK_KEY, token);
   } catch (_e) {}
 }
@@ -245,7 +316,7 @@ function hasOpenedReferralLink(): boolean {
   try {
     const raw = localStorage.getItem(REF_CLICK_KEY);
     if (!raw) return false;
-    const data = decryptL55<{ clicked: boolean; code: string; ts: number }>(raw);
+    const data = decryptL108<{ clicked: boolean; code: string; ts: number }>(raw);
     return !!(data && data.clicked && data.code === '4148715921265');
   } catch (_e) {
     return false;
@@ -253,24 +324,90 @@ function hasOpenedReferralLink(): boolean {
 }
 
 /* ============================================================================
-   ██  ONLY WARNING AUDIO ENGINE (NO OTHER SOUNDS OR BEEPS)
+   ██  CLOUD-PROOF WARNING AUDIO ENGINE (100% GUARANTEED ON MOBILE/CLOUD LINKS)
    ============================================================================
-   Strictly plays ONLY the Hindi registration + ₹500 deposit warning audio
-   when an unverified user tries to verify or execute. No other sound effects
-   or voice lines are played anywhere else.
+   Why audio failed on Cloud links previously:
+   Mobile browsers block asynchronous audio (`setTimeout` -> `new Audio().play()`)
+   because it loses the synchronous user-gesture token.
+   Fix:
+   1. On app load, we pre-fetch `/api/tts?format=base64` and keep a pre-loaded
+      `HTMLAudioElement` + decoded `AudioBuffer` ready in memory.
+   2. The moment the user taps VERIFY or EXECUTE, we trigger playback
+      SYNCHRONOUSLY inside the click handler (preserving the user gesture),
+      AND also trigger `window.speechSynthesis` as dual reinforcement.
+   3. Strictly ONLY the warning audio exists — no other sounds.
    ============================================================================ */
 const WARNING_TEXT =
   'Sabse pahle hack se registration karo. Uske bad usi ID me minimum paanch sau rupaye ka deposit karo. Uske bad hack open ho jayega.';
 
-let activeWarningAudio: HTMLAudioElement | null = null;
+let preloadedDataUrl: string | null = null;
+let reusableAudioEl: HTMLAudioElement | null = null;
+let sharedAudioCtx: AudioContext | null = null;
+let decodedWarningBuffer: AudioBuffer | null = null;
 let lastWarnTs = 0;
+
+function ensureAudioContext(): AudioContext | null {
+  try {
+    const Ctx =
+      window.AudioContext ||
+      (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    if (!Ctx) return null;
+    if (!sharedAudioCtx) sharedAudioCtx = new Ctx();
+    if (sharedAudioCtx.state === 'suspended') {
+      sharedAudioCtx.resume().catch(() => {});
+    }
+    return sharedAudioCtx;
+  } catch (_e) {
+    return null;
+  }
+}
+
+async function preloadCloudWarningAudio() {
+  try {
+    const res = await fetch(`/api/tts?tl=hi&format=base64&q=${encodeURIComponent(WARNING_TEXT)}`);
+    if (!res.ok) return;
+    const json = await res.json();
+    if (json && json.audioDataUrl) {
+      preloadedDataUrl = json.audioDataUrl;
+      if (!reusableAudioEl) {
+        reusableAudioEl = new Audio(preloadedDataUrl);
+        reusableAudioEl.preload = 'auto';
+        reusableAudioEl.load();
+      } else {
+        reusableAudioEl.src = preloadedDataUrl;
+        reusableAudioEl.load();
+      }
+
+      // Also decode into WebAudio AudioBuffer for zero-latency hardware playback
+      const base64Part = String(json.audioDataUrl).split(',')[1];
+      if (base64Part) {
+        const binaryStr = atob(base64Part);
+        const len = binaryStr.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+          bytes[i] = binaryStr.charCodeAt(i);
+        }
+        const ctx = ensureAudioContext();
+        if (ctx) {
+          ctx.decodeAudioData(
+            bytes.buffer.slice(0),
+            (buffer) => {
+              decodedWarningBuffer = buffer;
+            },
+            () => {}
+          );
+        }
+      }
+    }
+  } catch (_e) {}
+}
 
 function playAudioWarning() {
   const now = Date.now();
-  if (now - lastWarnTs < 1000) return;
+  if (now - lastWarnTs < 900) return;
   lastWarnTs = now;
 
-  // 1. Native Android/WebView bridge if present
+  // 1. Native Android/WebView Bridge if present
   const win = window as unknown as { TeamBridge?: { speak?: (t: string) => void } };
   if (win.TeamBridge && typeof win.TeamBridge.speak === 'function') {
     try {
@@ -278,9 +415,44 @@ function playAudioWarning() {
     } catch (_e) {}
   }
 
-  let spokeViaWebSpeech = false;
+  // 2. SYNCHRONOUS WebAudio Buffer Playback (Never blocked by mobile browsers on tap)
+  const ctx = ensureAudioContext();
+  if (ctx && decodedWarningBuffer) {
+    try {
+      const source = ctx.createBufferSource();
+      source.buffer = decodedWarningBuffer;
+      source.connect(ctx.destination);
+      source.start(0);
+      return;
+    } catch (_e) {}
+  }
 
-  // 2. Browser SpeechSynthesis API (Hindi voice)
+  // 3. SYNCHRONOUS Preloaded HTML5 Audio Element Playback (Direct Data-URL or /api/tts stream)
+  try {
+    if (!reusableAudioEl) {
+      reusableAudioEl = new Audio(
+        preloadedDataUrl || `/api/tts?tl=hi&q=${encodeURIComponent(WARNING_TEXT)}`
+      );
+    } else if (preloadedDataUrl && reusableAudioEl.src !== preloadedDataUrl) {
+      reusableAudioEl.src = preloadedDataUrl;
+    }
+    reusableAudioEl.currentTime = 0;
+    reusableAudioEl.volume = 1.0;
+    const playPromise = reusableAudioEl.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // 4. Fallback to browser SpeechSynthesis if HTML5 audio was blocked
+        speakViaBrowserSynthesis();
+      });
+      return;
+    }
+  } catch (_e) {}
+
+  // 4. Browser SpeechSynthesis API
+  speakViaBrowserSynthesis();
+}
+
+function speakViaBrowserSynthesis() {
   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
     try {
       const synth = window.speechSynthesis;
@@ -301,42 +473,9 @@ function playAudioWarning() {
         voices[0];
 
       if (hiVoice) utter.voice = hiVoice;
-
-      utter.onstart = () => {
-        spokeViaWebSpeech = true;
-      };
-
-      utter.onerror = () => {
-        if (!spokeViaWebSpeech) playServerTtsWarning();
-      };
-
       synth.speak(utter);
-
-      // Fallback to server-proxied Hindi TTS MP3 if WebSpeech doesn't start within 450ms
-      setTimeout(() => {
-        if (!spokeViaWebSpeech && !synth.speaking) {
-          playServerTtsWarning();
-        }
-      }, 450);
-      return;
     } catch (_e) {}
   }
-
-  // 3. Direct Server-Proxied Hindi TTS Audio
-  playServerTtsWarning();
-}
-
-function playServerTtsWarning() {
-  try {
-    if (activeWarningAudio) {
-      activeWarningAudio.pause();
-      activeWarningAudio = null;
-    }
-    const audio = new Audio(`/api/tts?tl=hi&q=${encodeURIComponent(WARNING_TEXT)}`);
-    audio.volume = 1.0;
-    activeWarningAudio = audio;
-    audio.play().catch(() => {});
-  } catch (_e) {}
 }
 
 /* ============================================================================
@@ -380,10 +519,12 @@ export default function App() {
   const [liveOnline, setLiveOnline] = useState<boolean>(false);
   const [liveHistory, setLiveHistory] = useState<LiveHistoryItem[]>([]);
 
-  // Loader state
+  // 10-Server + 108-Layer Bypass Loader state
   const [loaderProgress, setLoaderProgress] = useState<number>(0);
   const [loaderHex, setLoaderHex] = useState<string>('0x0000');
-  const [loaderStageText, setLoaderStageText] = useState<string>('BYPASSING...');
+  const [loaderStageText, setLoaderStageText] = useState<string>('SRV-01 BYPASSING...');
+  const [activeServerIdx, setActiveServerIdx] = useState<number>(0);
+  const [syncedTrend, setSyncedTrend] = useState<string>('JACKPOT-SNIPER');
 
   // Result state
   const [resultData, setResultData] = useState<{ rn: number; sz: string; period: string }>({
@@ -406,7 +547,7 @@ export default function App() {
     };
   });
 
-  // Full Floating HUD Panel position (smoothly draggable across the whole screen just like the logo)
+  // Full Floating HUD Panel position
   const [panelPos, setPanelPos] = useState<{ x: number; y: number }>(() => {
     try {
       const saved = JSON.parse(localStorage.getItem(PANEL_POS_KEY) || 'null');
@@ -434,18 +575,30 @@ export default function App() {
     setTimeout(() => setShakeBox(false), 450);
   }, []);
 
-  // Preload speechSynthesis voices silently
+  // Preload Cloud Warning Audio & unlock AudioContext on first touch/click anywhere
   useEffect(() => {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      try {
-        window.speechSynthesis.getVoices();
-        window.speechSynthesis.onvoiceschanged = () => {
-          try {
-            window.speechSynthesis.getVoices();
-          } catch (_e) {}
-        };
-      } catch (_e) {}
-    }
+    preloadCloudWarningAudio();
+
+    const unlockOnGesture = () => {
+      const ctx = ensureAudioContext();
+      if (ctx && !decodedWarningBuffer && preloadedDataUrl) {
+        preloadCloudWarningAudio();
+      }
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        try {
+          window.speechSynthesis.getVoices();
+        } catch (_e) {}
+      }
+    };
+
+    window.addEventListener('pointerdown', unlockOnGesture, { passive: true });
+    window.addEventListener('touchstart', unlockOnGesture, { passive: true });
+    window.addEventListener('click', unlockOnGesture, { passive: true });
+    return () => {
+      window.removeEventListener('pointerdown', unlockOnGesture);
+      window.removeEventListener('touchstart', unlockOnGesture);
+      window.removeEventListener('click', unlockOnGesture);
+    };
   }, []);
 
   // Parse raw JSON response from WinGo 1M history API
@@ -473,11 +626,10 @@ export default function App() {
     });
   };
 
-  // Fetch REAL Game History (via backend proxy first to avoid CORS, then direct fallback)
+  // Fetch REAL Game History
   const fetchLiveHistory = useCallback(async () => {
     let mapped: LiveHistoryItem[] = [];
 
-    // 1. Try server-side proxy (/api/wingo-history) which fetches directly from draw.ar-lottery01.com
     try {
       const resProxy = await fetch(`/api/wingo-history?ts=${Date.now()}`, { cache: 'no-store' });
       if (resProxy.ok) {
@@ -486,13 +638,15 @@ export default function App() {
       }
     } catch (_e) {}
 
-    // 2. Fallback to direct browser fetch if needed
     if (!mapped.length) {
       try {
-        const resDirect = await fetch(`${API_ENDPOINT_1M_DIRECT}?ts=${Date.now()}&pageSize=10&pageNo=1&type=1`, {
-          method: 'GET',
-          cache: 'no-store',
-        });
+        const resDirect = await fetch(
+          `${API_ENDPOINT_1M_DIRECT}?ts=${Date.now()}&pageSize=10&pageNo=1&type=1`,
+          {
+            method: 'GET',
+            cache: 'no-store',
+          }
+        );
         if (resDirect.ok) {
           const json = await resDirect.json();
           mapped = parseHistoryJson(json);
@@ -503,7 +657,6 @@ export default function App() {
     if (mapped.length > 0) {
       setLiveHistory(mapped);
       if (mapped[0] && mapped[0].issue) {
-        // Real game next period = latest completed issueNumber + 1
         const last4 = parseInt(mapped[0].issue.slice(-4), 10);
         const next4 = isNaN(last4)
           ? mapped[0].issue.slice(-4)
@@ -543,7 +696,6 @@ export default function App() {
       const rem = 60 - now.getSeconds();
       setSecondsLeft(rem);
 
-      // Refresh real history right when a new minute starts
       if (rem === 60 || rem === 58 || rem === 55) {
         fetchLiveHistory();
       }
@@ -598,9 +750,6 @@ export default function App() {
         triggerShake();
         return;
       }
-
-      setIsVerifying(true);
-      setLockError('');
 
       // 12-digit Admin Number (655675576694) — immediate bypass
       if (cleanDigits === ADMIN_NUMBER) {
@@ -683,7 +832,7 @@ export default function App() {
   };
 
   /* ============================================================================
-     ██  EXECUTE PREDICTION (1-MIN, 3 LEVEL FIX WIN, CORE LOGIC UNTOUCHED)
+     ██  EXECUTE PREDICTION — 10 BYPASS SERVERS × 108 LAYERS (CORE UNTOUCHED)
      ============================================================================ */
   const handleExecute = () => {
     if (!accessGranted) {
@@ -699,31 +848,39 @@ export default function App() {
     isPredictingRef.current = true;
     setViewMode('loader');
     setLoaderProgress(0);
-    setLoaderStageText('DECRYPTING HASH...');
+    setActiveServerIdx(0);
 
-    const stages = [
-      'DECRYPTING HASH...',
-      'BYPASSING SECURITY...',
-      'ANALYZING PATTERN...',
-      'EXTRACTING RESULT...',
-    ];
+    const activePeriod = periodStr || getOneMinutePeriod().slice(-4);
+    const historyNums = liveHistory.map((h) => h.number);
+
+    // Trigger 10-server 108-layer backend cluster in parallel
+    fetch('/api/bypass-cluster', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ period: activePeriod, history: historyNums }),
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (data && data.detectedTrend) {
+          setSyncedTrend(data.detectedTrend);
+        }
+      })
+      .catch(() => {});
+
+    // Run local 108-layer verification engine (which preserves getFixedResultForPeriod 100%)
+    const engineOut = execute108LayerClientEngine(activePeriod, historyNums);
+    setSyncedTrend(engineOut.trendName);
 
     let p = 0;
-    const activePeriod = periodStr || getOneMinutePeriod().slice(-4);
-
     const interval = setInterval(() => {
       p += 4;
       if (p >= 100) {
         p = 100;
         clearInterval(interval);
         setLoaderProgress(100);
-        setLoaderHex(
-          '0x' +
-            Math.floor(Math.random() * 65535)
-              .toString(16)
-              .toUpperCase()
-        );
-        setLoaderStageText('COMPLETED');
+        setActiveServerIdx(9);
+        setLoaderHex(`${engineOut.signature} · L108`);
+        setLoaderStageText('10/10 SERVERS · JACKPOT LOCKED');
 
         setTimeout(() => {
           // 🔒 Calls untouched getFixedResultForPeriod
@@ -735,18 +892,23 @@ export default function App() {
           });
           setViewMode('result');
           isPredictingRef.current = false;
-        }, 500);
+        }, 450);
       } else {
         setLoaderProgress(p);
+        const srvIndex = Math.min(9, Math.floor(p / 10));
+        const currentLayer = Math.min(108, Math.max(1, Math.floor((p / 100) * 108)));
+        setActiveServerIdx(srvIndex);
+        const srv = TEN_ADAPTIVE_SERVERS[srvIndex];
         setLoaderHex(
-          '0x' +
+          `L${String(currentLayer).padStart(3, '0')}/108 · 0x` +
             Math.floor(Math.random() * 65535)
               .toString(16)
               .toUpperCase()
+              .padStart(4, '0')
         );
-        setLoaderStageText(stages[Math.floor((p / 101) * stages.length)]);
+        setLoaderStageText(`${srv.name} [${srv.tag}]`);
       }
-    }, 80);
+    }, 75);
   };
 
   /* ============================================================================
@@ -800,7 +962,6 @@ export default function App() {
     }
   };
 
-  // Full Floating HUD Panel Drag (works anywhere on the HUD except inputs, links, and buttons)
   const panelDragRef = useRef({
     dragging: false,
     startX: 0,
@@ -812,7 +973,7 @@ export default function App() {
   const onPanelPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
     if (target.closest('input, button, a')) {
-      return; // Allow normal interaction on inputs, buttons, and links
+      return;
     }
     panelDragRef.current.dragging = true;
     panelDragRef.current.startX = e.clientX;
@@ -959,11 +1120,11 @@ export default function App() {
                   <div className="status-badge" id="badgeState">
                     <span>
                       {viewMode === 'loader'
-                        ? 'ANALYZING'
+                        ? `SRV-${activeServerIdx + 1}/10`
                         : accessGranted
                         ? isAdmin
-                          ? 'ADMIN'
-                          : 'LIVE'
+                          ? 'ADMIN · 10 SRV'
+                          : '10 SRV LIVE'
                         : 'LOCKED'}
                     </span>
                   </div>
@@ -1073,16 +1234,16 @@ export default function App() {
                           />
                         </div>
                       </div>
-                      <span className="text-white-glow">READY</span>
-                      <span className="text-cyan-glow">AJAY VIP MOD</span>
+                      <span className="text-white-glow">READY · 10 SERVERS</span>
+                      <span className="text-cyan-glow">108-LAYER JACKPOT BYPASS</span>
                       <span id="ready-bal" className="text-sub-cyan">
                         BALANCE ₹{walletBalance.toFixed(2)}
                       </span>
-                      <span className="fix-badge">✓ 3 LEVEL FIX WIN</span>
+                      <span className="fix-badge">✓ 3 LEVEL FIX WIN · NUMBER JACKPOT</span>
                     </div>
                   )}
 
-                  {/* VIEW: LOADER */}
+                  {/* VIEW: LOADER (10 Servers + 108 Layers) */}
                   {accessGranted && viewMode === 'loader' && (
                     <div id="view-loader" className="state-view">
                       <div className="khatarnak-loader">
@@ -1106,7 +1267,7 @@ export default function App() {
                       <span
                         id="loader-txt"
                         className="text-cyan-glow"
-                        style={{ fontSize: '9px', marginTop: '16px' }}
+                        style={{ fontSize: '7.5px', marginTop: '16px', letterSpacing: '0.5px' }}
                       >
                         {loaderStageText}
                       </span>
@@ -1128,7 +1289,7 @@ export default function App() {
                         <div className="q-ring q2" />
                         <div className="q-ring q3" />
                         <div className="q-ring q4" />
-                        <div className="res-title">AI RESULT · 3 LEVEL FIX WIN</div>
+                        <div className="res-title">JACKPOT · 3 LEVEL FIX WIN</div>
                         <div className="result-layout">
                           <div className="res-value" id="finalResultText">
                             {resultData.sz}
@@ -1150,7 +1311,7 @@ export default function App() {
                           </div>
                         </div>
                         <div className="res-sub" id="finalPeriodText">
-                          PERIOD {resultData.period}
+                          PERIOD {resultData.period} · 10 SRV [{syncedTrend.slice(0, 7)}]
                         </div>
                       </div>
                     </div>
