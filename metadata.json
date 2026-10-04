@@ -1,0 +1,6 @@
+{
+  "name": "BDG WIN PANEL",
+  "description": "BDG Win VIP Panel with 1-Minute 2-Level Fix Win Prediction, 55-Layer Encryption, Hindi Voice Assistant, and Admin/Referral Verification.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
